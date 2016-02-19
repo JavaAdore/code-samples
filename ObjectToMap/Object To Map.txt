@@ -1,0 +1,40 @@
+public static Map<String , String> objectToMap(Object obj)
+	{
+		Map<String , String> objectAsMap = new LinkedHashMap<String , String>();
+		Class objectClass = obj.getClass();
+		
+		Field[] fields= objectClass.getDeclaredFields();
+		
+		for(Field f : fields)
+		{
+			String fieldName = f.getName();
+			
+			try {
+				Field currentField = objectClass.getDeclaredField(fieldName);
+				currentField.setAccessible(true);
+				
+				objectAsMap.put(currentField.getName(),String.valueOf(currentField.get(obj)) );
+				
+					
+				
+				
+			} catch (NoSuchFieldException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+
+			
+		}
+		return objectAsMap;
+		
+		
+	}
